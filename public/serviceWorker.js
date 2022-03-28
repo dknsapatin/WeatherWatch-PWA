@@ -5,9 +5,7 @@ const self = this;
 
 // Install SW
 self.addEventListener("install", (event) => {
-  // waiting until something is done
   event.waitUntil(
-    //   Open the cache     | Return a promise
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Opened cache");
 
@@ -18,20 +16,10 @@ self.addEventListener("install", (event) => {
 
 // Listen for requests
 self.addEventListener("fetch", (event) => {
-  // We respond
   event.respondWith(
-    // Match all the request that the pages are saving
-    caches
-      .match(event.request)
-      // Then for all the request
-      .then(() => {
-        // fetch them again
-        return (
-          fetch(event.request)
-            // If theres no internet connection match them with offline
-            .catch(() => caches.match("offline.html"))
-        );
-      })
+    caches.match(event.request).then(() => {
+      return fetch(event.request).catch(() => caches.match("offline.html"));
+    })
   );
 });
 

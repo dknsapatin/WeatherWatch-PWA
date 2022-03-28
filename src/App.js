@@ -54,6 +54,12 @@ const App = () => {
               src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
               alt={weather.weather[0].description}
             />
+            <p className="high">
+              <strong>High</strong> {weather.main.temp_max} deg
+            </p>
+            <p className="low">
+              <strong>Low</strong> {weather.main.temp_min} deg
+            </p>
             <p>{weather.weather[0].description}</p>
           </div>
         </div>
